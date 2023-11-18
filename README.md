@@ -1,7 +1,7 @@
 # NotificationService
 Notification Service Repository
 ## Description
-This microservice is designed to handle notifications for various channels, such as SMS, Email, and Push notifications. It provides functionality to send notifications and fetch notification history for a user.
+This microservice is designed to handle notifications for SMS channels. It provides functionality to send notifications and fetch notification history for a user.
 
 ## Table of Contents
 - Prerequisites
