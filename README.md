@@ -1,7 +1,7 @@
 # NotificationService
 Notification Service Repository
 ## Description
-This microservice is designed to handle notifications for SMS channels. It provides functionality to send notifications and fetch notification history for a user.
+This microservice is designed to handle notifications for SMS channels. It provides functionality to send notifications and fetch notification history for a user. The notifications are sent via Twilio.
 
 ## Table of Contents
 - Prerequisites
@@ -39,7 +39,7 @@ Ensure to configure the following properties in your application.properties or a
 These can be stored as environmental variables and then retrived as required to initialize the integrated twilio service.
 
 ## Endpoints
-- Send Notification:
+- Send Notification: This is the endpoint for sending notifications to users.
 
 `POST /notifications/send`
 
@@ -55,7 +55,8 @@ Request Body:
     "notificationChannel": "SMS"
 }
 ```
-## Fetch Notification History:
+- Fetch Notification History: This endpoint is for fetching notification history for a user in chronological order.
+
 `POST /notifications/fetch/user/{id}`
 
 Example:
@@ -63,6 +64,7 @@ Example:
 
 ## DTO Classes
 ### Send Notification Request Dto
+This DTO class is used for receiving the inbound requests for sending notification. This class has methods to convert the object from DTO type to the actual enntity type that will be stored in the database. 
 ```
 @Getter
 @Setter
@@ -95,7 +97,7 @@ public class ControllerAdvices {
 ## Model Classes
 
 ### Base Model
-
+This is the base model class for all the entities.
 ```
 @MappedSuperclass
 @Getter
@@ -105,7 +107,7 @@ public abstract class BaseModel {
 }
 ```
 ### Notification
-
+This is the class for the notification entity that will be stored in database.
 ```
 @Getter
 @Setter
@@ -117,6 +119,7 @@ public class Notification extends BaseModel implements Comparable<Notification> 
 }
 ```
 ### Message
+This class is for storing the message content.
 ```
 @Entity
 @Getter
@@ -131,13 +134,14 @@ public class MockUser extends BaseModel {
 ## Repositories
 
 ### MockUserRepository
-
+This repository is used for storing users to mock the API call to UserService microservice prior to integration.
 ```
 public interface MockUserRepository extends JpaRepository<MockUser, Long> {
     // Repository methods...
 }
 ```
 ### Notification
+This repository is for storing the Notification entity.
 ```
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
@@ -147,11 +151,11 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
 ## Services
 
 ### MockUserService
-
+This service includes business logic for creating a storing a user object. User object is used for mocking calls to UserService prior to integration.
 ### NotificationService
-
+This service includes logic for sending notification and fetching notification history.
 ## Twilio API Integration
-
+This class contains third-party code for integrating twilio API and forwarding the notification request to Twilio.
 ```
 @RestController
 public class SmsController {
